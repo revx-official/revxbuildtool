@@ -118,7 +118,7 @@ func main() {
 			trimmed := strings.TrimSpace(line)
 
 			if len(trimmed) > 0 {
-				Infof("go: %s\n", line)
+				Infof("%s\n", line)
 			}
 		}
 	}
@@ -128,7 +128,7 @@ func main() {
 			trimmed := strings.TrimSpace(line)
 
 			if len(trimmed) > 0 {
-				Errorf("go: %s\n", line)
+				Errorf("%s\n", line)
 			}
 		}
 	}
