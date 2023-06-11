@@ -99,6 +99,8 @@ func main() {
 
 	cmd := exec.Command("go", "build", "-tags", compilerTags, "-ldflags", linkerFlags, "-o", "bin/revx-daemon", "cmd/daemon.go")
 
+	cmd.Env = append(cmd.Env, "CGO_ENABLED=0")
+
 	var outBuffer bytes.Buffer
 	var errBuffer bytes.Buffer
 
