@@ -18,6 +18,17 @@ const (
 	RevxPackagePath = "github.com/revx/pkg/revx"
 )
 
+func GoVersion() (string, error) {
+	output, err := exec.Command("go", "version").Output()
+
+	if err != nil {
+		return "", err
+	}
+
+	value := string(output)
+	return strings.TrimSpace(value), nil
+}
+
 func main() {
 	Infof := console.NewConsoleColor().PrintFunc()
 	Errorf := console.NewConsoleColor(console.FgColorRed).PrintFunc()
@@ -45,6 +56,16 @@ func main() {
 	Infof("revx build tool\n")
 	Infof("copyright © 2023 revx\n")
 	Infof("all rights reserved\n")
+	Infof("\n")
+
+	goVersion, err := GoVersion()
+
+	if err != nil {
+		Errorf("error: %s\n", err.Error())
+		return
+	}
+
+	Infof("go version: %s\n", goVersion)
 	Infof("\n")
 
 	revxInfo, err := revx.UnmarshalFromFile(flagRevxInfoFile)
