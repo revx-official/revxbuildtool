@@ -3,6 +3,7 @@ package main
 import (
 	"bytes"
 	"flag"
+	"os"
 	"os/exec"
 	"path"
 	"strings"
@@ -30,6 +31,8 @@ func GoVersion() (string, error) {
 }
 
 func main() {
+	println(os.Getwd())
+
 	Infof := console.NewConsoleColor().PrintFunc()
 	Errorf := console.NewConsoleColor(console.FgColorRed).PrintFunc()
 
