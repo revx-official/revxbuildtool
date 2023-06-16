@@ -106,10 +106,8 @@ func main() {
 	Infof("\n")
 	Infof("compiling ...\n")
 
-	mainFile := path.Join("cmd", flagMainFile)
 	outFile := path.Join("bin", flagOutputFile)
-
-	cmd := exec.Command("go", "build", "-tags", compilerTags, "-ldflags", linkerFlags, "-o", outFile, mainFile)
+	cmd := exec.Command("go", "build", "-tags", compilerTags, "-ldflags", linkerFlags, "-o", outFile, flagMainFile)
 
 	cmd.Env = append(cmd.Env, "CGO_ENABLED=0")
 
