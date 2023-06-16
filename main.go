@@ -65,7 +65,8 @@ func main() {
 		return
 	}
 
-	Infof("go version: %s\n", goVersion)
+	Infof("go version:\n")
+	Infof("  %s\n", goVersion)
 	Infof("\n")
 
 	revxInfo, err := revx.UnmarshalFromFile(flagRevxInfoFile)
