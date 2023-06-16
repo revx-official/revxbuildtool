@@ -4,13 +4,14 @@ import (
 	"bytes"
 	"flag"
 	"os/exec"
+	"path"
 	"strings"
 
 	"github.com/revx-official/revxbuildtool/pkg/gcu"
 	"github.com/revx-official/revxbuildtool/pkg/git"
 	"github.com/revx-official/revxbuildtool/pkg/revx"
 
-	"github.com/revx-official/log/pkg/console"
+	"github.com/revx-official/output/console"
 )
 
 const (
@@ -26,10 +27,18 @@ func main() {
 	var flagRelease bool
 	var flagRevxInfoFile string
 
+	var flagMainFile string
+	var flagOutputFile string
+	var flagOutputDirectory string
+
 	flag.BoolVar(&flagTrace, "trace", false, "Enable trace logging.")
 	flag.BoolVar(&flagLocal, "local", false, "Build revx for local development execution.")
 	flag.BoolVar(&flagRelease, "release", false, "Build revx for release.")
 	flag.StringVar(&flagRevxInfoFile, "revx-info", "version.yaml", "Specify the revx version info file.")
+
+	flag.StringVar(&flagMainFile, "main-file", "cmd/revxdaemon.go", "Specify the revx main file.")
+	flag.StringVar(&flagOutputFile, "out-file", "revxdaemon.go", "Specify the revx binary out file.")
+	flag.StringVar(&flagOutputDirectory, "out-dir", "bin", "Specify the revx binary output directory.")
 
 	flag.Parse()
 
@@ -97,7 +106,10 @@ func main() {
 	Infof("\n")
 	Infof("compiling ...\n")
 
-	cmd := exec.Command("go", "build", "-tags", compilerTags, "-ldflags", linkerFlags, "-o", "bin/revx-daemon", "cmd/daemon.go")
+	mainFile := path.Join("cmd", flagMainFile)
+	outFile := path.Join("bin", flagOutputFile)
+
+	cmd := exec.Command("go", "build", "-tags", compilerTags, "-ldflags", linkerFlags, "-o", outFile, mainFile)
 
 	cmd.Env = append(cmd.Env, "CGO_ENABLED=0")
 
