@@ -103,13 +103,14 @@ func main() {
 	linkerFlags := linker.Compile()
 	compilerTags := compiler.CompileTags()
 
-	Infof("\n")
-	Infof("compiling ...\n")
-
 	outFile := path.Join("bin", flagOutputFile)
 
+	Infof("\n")
 	Infof("main file: %s\n", flagMainFile)
 	Infof("output file: %s\n", outFile)
+
+	Infof("\n")
+	Infof("compiling ...\n")
 
 	cmd := exec.Command("go", "build", "-tags", compilerTags, "-ldflags", linkerFlags, "-o", outFile, flagMainFile)
 
