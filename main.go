@@ -37,7 +37,7 @@ func main() {
 	flag.StringVar(&flagRevxInfoFile, "revx-info", "version.yaml", "Specify the revx version info file.")
 
 	flag.StringVar(&flagMainFile, "main-file", "cmd/revxdaemon.go", "Specify the revx main file.")
-	flag.StringVar(&flagOutputFile, "out-file", "revxdaemon.go", "Specify the revx binary out file.")
+	flag.StringVar(&flagOutputFile, "out-file", "revxdaemon", "Specify the revx binary out file.")
 	flag.StringVar(&flagOutputDirectory, "out-dir", "bin", "Specify the revx binary output directory.")
 
 	flag.Parse()
