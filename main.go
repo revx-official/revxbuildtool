@@ -3,8 +3,11 @@ package main
 import (
 	"bytes"
 	"flag"
+	"fmt"
+	"os"
 	"os/exec"
 	"path"
+	"path/filepath"
 	"strings"
 
 	"github.com/revx-official/revxbuildtool/pkg/gcu"
@@ -18,7 +21,22 @@ const (
 	RevxPackagePath = "github.com/revx/pkg/revx"
 )
 
+func Location() {
+	executable, err := os.Executable()
+
+	if err != nil {
+		panic(err)
+	}
+
+	path := filepath.Dir(executable)
+
+	fmt.Printf("executable: %s\n", executable)
+	fmt.Printf("executable: %s\n\n", path)
+}
+
 func main() {
+	Location()
+
 	Infof := console.NewConsoleColor().PrintFunc()
 	Errorf := console.NewConsoleColor(console.FgColorRed).PrintFunc()
 
