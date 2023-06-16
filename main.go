@@ -31,8 +31,6 @@ func GoVersion() (string, error) {
 }
 
 func main() {
-	println(os.Getwd())
-
 	Infof := console.NewConsoleColor().PrintFunc()
 	Errorf := console.NewConsoleColor(console.FgColorRed).PrintFunc()
 
@@ -55,6 +53,13 @@ func main() {
 	flag.StringVar(&flagOutputDirectory, "out-dir", "bin", "Specify the revx binary output directory.")
 
 	flag.Parse()
+
+	workDir, err := os.Getwd()
+
+	if err != nil {
+		Errorf("error: %s\n", err.Error())
+		return
+	}
 
 	Infof("revx build tool\n")
 	Infof("copyright © 2023 revx\n")
@@ -137,7 +142,7 @@ func main() {
 	Infof("\n")
 	Infof("compiling ...\n")
 
-	cmd := exec.Command("go", "build", "-tags", compilerTags, "-ldflags", linkerFlags, "-o", outFile, flagMainFile)
+	cmd := exec.Command("go", "build", "-C", workDir, "-tags", compilerTags, "-ldflags", linkerFlags, "-o", outFile, flagMainFile)
 
 	cmd.Env = append(cmd.Env, "CGO_ENABLED=0")
 
