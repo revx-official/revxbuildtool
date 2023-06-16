@@ -50,7 +50,7 @@ func main() {
 	revxInfo, err := revx.UnmarshalFromFile(flagRevxInfoFile)
 
 	if err != nil {
-		Errorf("error: %s", err.Error())
+		Errorf("error: %s\n", err.Error())
 		return
 	}
 
@@ -107,10 +107,13 @@ func main() {
 	Infof("compiling ...\n")
 
 	outFile := path.Join("bin", flagOutputFile)
+
+	Infof("main file: %s\n", flagMainFile)
+	Infof("output file: %s\n", outFile)
+
 	cmd := exec.Command("go", "build", "-tags", compilerTags, "-ldflags", linkerFlags, "-o", outFile, flagMainFile)
 
 	cmd.Env = append(cmd.Env, "CGO_ENABLED=0")
-	console.NewConsoleColor(console.FgColorIntenseYellow).Printf("execution director: %s\n", cmd.Dir)
 
 	var outBuffer bytes.Buffer
 	var errBuffer bytes.Buffer
