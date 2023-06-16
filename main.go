@@ -3,11 +3,8 @@ package main
 import (
 	"bytes"
 	"flag"
-	"fmt"
-	"os"
 	"os/exec"
 	"path"
-	"path/filepath"
 	"strings"
 
 	"github.com/revx-official/revxbuildtool/pkg/gcu"
@@ -21,22 +18,7 @@ const (
 	RevxPackagePath = "github.com/revx/pkg/revx"
 )
 
-func Location() {
-	executable, err := os.Executable()
-
-	if err != nil {
-		panic(err)
-	}
-
-	path := filepath.Dir(executable)
-
-	fmt.Printf("executable: %s\n", executable)
-	fmt.Printf("executable: %s\n\n", path)
-}
-
 func main() {
-	Location()
-
 	Infof := console.NewConsoleColor().PrintFunc()
 	Errorf := console.NewConsoleColor(console.FgColorRed).PrintFunc()
 
@@ -128,6 +110,7 @@ func main() {
 	cmd := exec.Command("go", "build", "-tags", compilerTags, "-ldflags", linkerFlags, "-o", outFile, flagMainFile)
 
 	cmd.Env = append(cmd.Env, "CGO_ENABLED=0")
+	console.NewConsoleColor(console.FgColorIntenseYellow).Printf("execution director: %s\n", cmd.Dir)
 
 	var outBuffer bytes.Buffer
 	var errBuffer bytes.Buffer
