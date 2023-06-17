@@ -54,12 +54,12 @@ func main() {
 
 	flag.Parse()
 
-	workDir, err := os.Getwd()
+	// workDir, err := os.Getwd()
 
-	if err != nil {
-		Errorf("error: %s\n", err.Error())
-		return
-	}
+	// if err != nil {
+	// 	Errorf("error: %s\n", err.Error())
+	// 	return
+	// }
 
 	Infof("revx build tool\n")
 	Infof("copyright © 2023 revx\n")
@@ -142,8 +142,12 @@ func main() {
 	Infof("\n")
 	Infof("compiling ...\n")
 
-	cmd := exec.Command("go", "build", "-C", workDir, "-tags", compilerTags, "-ldflags", linkerFlags, "-o", outFile, flagMainFile)
+	cmd := exec.Command("go", "build", "-tags", compilerTags, "-ldflags", linkerFlags, "-o", outFile, flagMainFile)
 
+	goPath := os.Getenv("GOPATH")
+	Infof("GOPATH: %s\n", goPath)
+
+	cmd.Env = append(cmd.Env, "GOPATH="+goPath)
 	cmd.Env = append(cmd.Env, "CGO_ENABLED=0")
 
 	var outBuffer bytes.Buffer
