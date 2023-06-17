@@ -144,10 +144,7 @@ func main() {
 
 	cmd := exec.Command("go", "build", "-tags", compilerTags, "-ldflags", linkerFlags, "-o", outFile, flagMainFile)
 
-	goPath := os.Getenv("GOPATH")
-	Infof("GOPATH: %s\n", goPath)
-
-	cmd.Env = append(cmd.Env, "GOPATH="+goPath)
+	cmd.Env = os.Environ()
 	cmd.Env = append(cmd.Env, "CGO_ENABLED=0")
 
 	var outBuffer bytes.Buffer
